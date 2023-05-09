@@ -1,5 +1,5 @@
 import styles from '@/styles/Home.module.css';
-import { Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -8,13 +8,15 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import 'dayjs/locale/en';
 import Head from 'next/head';
 import { useState } from 'react';
+import { Dayjs } from 'dayjs';
+
 const darkTheme = createTheme({
 	palette: {
-		mode: 'dark',
+		mode: 'light',
 	},
 });
 export default function Home() {
-	const [birthDay, setBirthDay] = useState('');
+	const [birthDay, setBirthDay] = useState<Dayjs | null>(null);
 	return (
 		<>
 			<Head>
@@ -32,9 +34,11 @@ export default function Home() {
 					<LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale='en'>
 						<DatePicker
 							value={birthDay}
-							onChange={(newValue: string | null) => setBirthDay(newValue!)}
+              disableFuture
+							onChange={(newValue) => setBirthDay(newValue!)}
 						/>
 					</LocalizationProvider>
+          <Button disabled={!birthDay}>결과보기</Button>
 				</main>
 			</ThemeProvider>
 		</>
