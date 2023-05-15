@@ -1,21 +1,17 @@
-import { rest, setupWorker } from 'msw'
-export interface ConstellationsResponse {
-  data: {
-    name: string;
-    dateRange: {
-      start: string;
-      end: string;
-    }
-  };
-}
+import { ConstellationsResponse } from '@/types/dataType'
+import { rest } from 'msw'
+
 export const handlers = [
   // Handles a GET /user request
-  rest.get<ConstellationsResponse>('/constellations', (req, res, ctx) => {
-    console.log(req)
+  rest.get<ConstellationsResponse>('https://backend/constellations', (req, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({
         name: 'admin',
+        dateRange: {
+          start: '10-20',
+          end: '11-20',
+        }
       }),
     )
   }),

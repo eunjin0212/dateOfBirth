@@ -1,16 +1,21 @@
 import { styled } from '@mui/material'
 import Typography from '@mui/material/Typography'
+import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
-export default function Advertising() {
+const Advertising = () => {
   const [seconds, setSeconds] = useState(3)
+  const router = useRouter();
   useEffect(() => {
     const time = setInterval(() => {
       setSeconds(seconds - 1)
     }, 1100)
-    if (seconds === 0) clearInterval(time)
-  }, [seconds])
-  
+    if (seconds === 0) {
+      clearInterval(time);
+      router.push('/Result')
+    }
+  }, [router, seconds])
+
   return (
     <AdWrapper>
       <Typography variant="body1" color="initial" align='center'>{seconds}초 뒤에 결과가 공개됩니다.</Typography>
@@ -28,7 +33,7 @@ export default function Advertising() {
     </AdWrapper>
   )
 }
-
+export default Advertising
 const AdWrapper = styled('div')`
 display: flex;
 justify-content: center;
