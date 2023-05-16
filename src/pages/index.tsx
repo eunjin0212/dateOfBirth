@@ -10,16 +10,26 @@ import Head from 'next/head';
 import { useState } from 'react';
 import { Dayjs } from 'dayjs';
 import { useRouter } from 'next/router'
+import axios from 'axios';
 
 const darkTheme = createTheme({
   palette: {
     mode: 'light',
   },
 });
+export type birthDayType = string
 export default function Home() {
   const [birthDay, setBirthDay] = useState<Dayjs | null>(null);
   const router = useRouter();
-
+  const postDate = async () => {
+    try {
+      const body = { year: birthDay!.get('y'), month: birthDay!.get('m') + 1, date: birthDay!.get('d') }
+      const response = await axios.post('https://backend.dev/constellations', body);
+      router.push('/Advertising')
+    } catch (error) {
+      //
+    }
+  }
   return (
     <>
       <Head>
@@ -41,7 +51,7 @@ export default function Home() {
               onChange={(newValue) => setBirthDay(newValue!)}
             />
           </LocalizationProvider>
-          <Button disabled={!birthDay} onClick={() => router.push('/Advertising')}>결과보기</Button>
+          <Button disabled={!birthDay} onClick={() => postDate()}>결과보기</Button>
         </main>
       </ThemeProvider>
     </>

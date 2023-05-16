@@ -7,7 +7,7 @@ const Result = () => {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response: AxiosResponse<ConstellationsResponse> = await axios.get('https://backend/constellations');
+        const response: AxiosResponse<ConstellationsResponse> = await axios.get('https://backend.dev/constellations');
         console.log(response.data)
       } catch (error) {
         //
