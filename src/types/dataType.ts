@@ -1,11 +1,9 @@
 export interface ConstellationsResponse {
-  data: {
-    name: string;
-    dateRange: {
-      start: { month: number, day: number };
-      end: { month: number, day: number };
-    }
-  };
+  name: string;
+  dateRange: {
+    start: { month: number, day: number };
+    end: { month: number, day: number };
+  }
 }
 export interface ConstellationsRequest {
   year: number;

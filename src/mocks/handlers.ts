@@ -12,13 +12,9 @@ export const handlers = [
   }),
 
   rest.post<ConstellationsRequest>('https://backend.dev/constellations', (req, res, ctx) => {
-    console.log('post', Object.values(req.body).some(v => !v))
     if (Object.values(req.body).some(v => !v)) {
       return res(
         ctx.status(500),
-        ctx.json({
-          message: '생일을 입력해주세요.'
-        })
       )
     }
     sessionStorage.setItem('birthDay', JSON.stringify(req.body))

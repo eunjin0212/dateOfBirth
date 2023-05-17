@@ -7,10 +7,11 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import 'dayjs/locale/en';
 import Head from 'next/head';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Dayjs } from 'dayjs';
 import { useRouter } from 'next/router'
 import axios from 'axios';
+import type { DateValidationError } from '@mui/x-date-pickers';
 
 const darkTheme = createTheme({
   palette: {
@@ -23,13 +24,17 @@ export default function Home() {
   const router = useRouter();
   const postDate = async () => {
     try {
-      const body = { year: birthDay!.get('y'), month: birthDay!.get('m'), day: birthDay!.get('d') }
-      const response = await axios.post('https://backend.dev/constellations', body);
+      const body = { year: birthDay!.get('y'), month: birthDay!.get('M'), day: birthDay!.get('D') }
+      await axios.post('https://backend.dev/constellations', body);
       router.push('/Advertising')
     } catch (error) {
       //
     }
   }
+
+  const [error, setError] = useState<DateValidationError>(null);
+  const errorMessage = useMemo(() => (error === 'invalidDate' ? '생일을 입력해주세요.' : ''), [error])
+
   return (
     <>
       <Head>
@@ -49,6 +54,12 @@ export default function Home() {
               value={birthDay}
               disableFuture
               onChange={(newValue) => setBirthDay(newValue!)}
+              onError={(newError) => setError(newError)}
+              slotProps={{
+                textField: {
+                  helperText: <span style={{ color: 'red' }}>{errorMessage}</span>,
+                },
+              }}
             />
           </LocalizationProvider>
           <Button disabled={!birthDay} onClick={() => postDate()}>결과보기</Button>
