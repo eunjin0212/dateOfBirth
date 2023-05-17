@@ -2,13 +2,13 @@ export interface ConstellationsResponse {
   data: {
     name: string;
     dateRange: {
-      start: { month: number, date: number };
-      end: { month: number, date: number };
+      start: { month: number, day: number };
+      end: { month: number, day: number };
     }
   };
 }
 export interface ConstellationsRequest {
   year: number;
   month: number;
-  date: number;
+  day: number;
 }

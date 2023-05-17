@@ -23,7 +23,7 @@ export default function Home() {
   const router = useRouter();
   const postDate = async () => {
     try {
-      const body = { year: birthDay!.get('y'), month: birthDay!.get('m') + 1, date: birthDay!.get('d') }
+      const body = { year: birthDay!.get('y'), month: birthDay!.get('m'), day: birthDay!.get('d') }
       const response = await axios.post('https://backend.dev/constellations', body);
       router.push('/Advertising')
     } catch (error) {
