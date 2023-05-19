@@ -4,10 +4,10 @@ import { rest } from 'msw'
 
 export const handlers = [
   rest.get<ConstellationsResponse>('https://backend.dev/constellations', (req, res, ctx) => {
-    const birthDay: ConstellationsRequest = JSON.parse(sessionStorage.getItem('birthDay')!)
+    const { year, month, day }: ConstellationsRequest = JSON.parse(sessionStorage.getItem('birthDay')!)
     return res(
       ctx.status(200),
-      ctx.json(isDateInRange(birthDay.year, birthDay.month, birthDay.day)),
+      ctx.json(isDateInRange(year, month, day)),
     )
   }),
 

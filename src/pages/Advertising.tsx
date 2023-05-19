@@ -1,3 +1,4 @@
+import { ConstellationsRequest } from '@/types/dataType'
 import { styled } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import { useRouter } from 'next/router'
@@ -12,7 +13,8 @@ const Advertising = () => {
     }, 1100)
     if (seconds === 0) {
       clearInterval(time);
-      router.push('/Result')
+      const { year, month, day }: ConstellationsRequest = JSON.parse(sessionStorage.getItem('birthDay')!)
+      router.push(`/Result?year=${year}&month=${month}&day=${day}`)
     }
   }, [router, seconds])
 
